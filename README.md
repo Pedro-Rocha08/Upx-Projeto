@@ -1,2 +1,0 @@
-# Upx-Projeto
-

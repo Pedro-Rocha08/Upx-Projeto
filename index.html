@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Avise Aqui</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiscalize Aqui</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="header">
-        <h1>Avise Aqui</h1>
-        <nav>
-            <ul class="menu">
-                <li><a href="#header">Inicio</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <div class="brand-text">
+        <h1>Fiscalize Aqui</h1>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="#" class="nav-link">Reclamações</a>
+      <button class="btn-primary">+ Nova Reclamação</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <ul class="sidebar-links">
+      <li><a href="#">Início</a></li>
+      <li><a href="#">Minhas Reclamações</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- OVERLAY -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
