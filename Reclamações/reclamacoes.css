@@ -24,6 +24,10 @@ body {
   z-index: 10;
 }
 
+.header h1{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
 .brand {
   display: flex;
   align-items: center;

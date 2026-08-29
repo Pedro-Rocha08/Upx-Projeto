@@ -1,0 +1,285 @@
+/* 1. RESET E BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #0F172A;
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* 2. HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a2232;
+  padding: 12px 24px;
+  color: #ffffff;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0.5px rgb(51, 55, 61);
+}
+
+.header h1{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-btn {
+  background-color: #38bdf8;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.menu-btn .bar {
+  width: 18px;
+  height: 2px;
+  background-color: #0f172a;
+}
+
+.brand-text h1 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.brand-text span {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 3. MENU LATERAL (SIDEBAR) */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100vh;
+  background-color: #1e293b;
+  padding: 80px 20px 20px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar-links {
+  list-style: none;
+}
+
+.sidebar-links li {
+  margin-bottom: 16px;
+}
+
+.sidebar-links a {
+    padding: 10px 16px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.sidebar-links a:hover {
+  background-color: #38bdf8;
+  color: #0f172a;
+  border-radius: 8px;
+}
+
+/* 4. OVERLAY (Fundo Escuro) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 999;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.info-box {
+  background-color: #1a2232;
+  box-shadow: 0 0.5px rgb(51, 55, 61);
+  background-size: cover;
+  padding: 90px 150px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.info-box h2 {
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-family: playfair display;
+}
+
+.info-box span {
+  font-style: italic;
+  font-family: playfair display;
+  color: #38BDF8;
+}
+
+.info-box p {
+  box-sizing: border-box;
+  max-width: 400px;
+  margin-right: 10px;
+  padding: 10px 0;
+  font-size: 1rem;
+  color: #94A3B8;
+}
+
+.opcoes {
+  display: grid;
+    max-width: 1400px;
+    margin: auto;
+    margin-bottom: 0px;
+    padding: 30px;
+}
+
+.opcoes h2 {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+
+    margin-bottom: 36px;
+  padding-left: 40px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #8db2df;
+
+    margin-bottom: 36px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.card {
+    background: #1e2a3d;
+    border: 1px solid #34445c;
+    border-radius: 5px;
+
+    width: 300px;
+    height: 250px;
+
+    padding: 25px;
+}
+
+/* Card selecionado */
+
+.card:hover {
+    border-color: #20bfff;
+}
+
+
+/* Ícone */
+
+.icone {
+    width: 50px;
+    height: 50px;
+
+    background: #162237;
+
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    color: #20bfff;
+
+    margin-bottom: 26px;
+}
+
+
+/* Título */
+
+.card h3 {
+    font-family: Georgia, serif;
+
+    font-size: 16px;
+
+    margin-bottom: 14px;
+}
+
+
+/* Descrição */
+
+.card p {
+    max-width: 200px;
+
+    color: #91afd1;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    margin-bottom: 15px;
+}
+
+
+/* Link */
+
+.card a {
+    color: #20bfff;
+
+    text-decoration: none;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
