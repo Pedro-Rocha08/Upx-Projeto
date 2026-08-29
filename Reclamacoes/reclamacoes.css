@@ -357,54 +357,20 @@ body {
   margin-top: auto;
 }
 
-/* =========================
-   CELULAR
-========================= */
-
 @media (max-width: 768px) {
 
     /* HEADER */
     .header {
         width: 100%;
         padding: 10px 15px;
-        gap: 10px;
     }
 
-    .brand {
-        gap: 10px;
-        min-width: 0;
-    }
-
-    .brand-text h1 {
-        font-size: 1rem;
-    }
-
-    .brand-text span {
-        font-size: 0.65rem;
-    }
-
-    .actions {
-        gap: 8px;
-    }
-
-    .nav-link {
-        font-size: 0.75rem;
-    }
-
-    .btn-primary {
-        padding: 8px 10px;
-        font-size: 0.7rem;
-    }
-
-
-    /* =========================
-       ÁREA PRINCIPAL
-    ========================= */
-
+    /* PARTE DE CIMA */
     .info-box {
         width: 100%;
+        max-width: none;
         padding: 50px 25px;
-        margin-bottom: 0;
+        margin: 0;
     }
 
     .info-box h2 {
@@ -413,64 +379,52 @@ body {
     }
 
     .info-box p {
-        max-width: 300px;
-        margin-right: 0;
-        font-size: 0.95rem;
-    }
-
-
-    /* =========================
-       OPÇÕES
-    ========================= */
-
-    .opcoes {
-        width: 100%;
-        max-width: 100%;
-        padding: 35px 20px;
+        max-width: 350px;
         margin: 0;
     }
 
-    .opcoes h2 {
+    /* OPÇÕES */
+    .opcoes {
         width: 100%;
-        padding-left: 0;
-        margin-bottom: 30px;
-        font-size: 12px;
-        text-align: center;
+        max-width: none;
+        padding: 35px 15px;
     }
 
-
-    /* =========================
-       CARDS
-    ========================= */
-
+    /* MANTÉM OS CARDS LADO A LADO */
     .cards {
-        width: 100%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
     }
 
     .card {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        min-height: 220px;
-        padding: 25px;
+        width: calc((100% - 20px) / 3);
+        height: 200px;
+        padding: 15px;
+    }
+
+    .icone {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .card h3 {
+        font-size: 13px;
+        margin-bottom: 10px;
     }
 
     .card p {
         max-width: 100%;
+        font-size: 10px;
+        line-height: 1.5;
     }
 
-
-    /* =========================
-       FOOTER
-    ========================= */
-
+    /* FOOTER */
     .footer {
         width: 100%;
-        padding: 18px 15px;
-        font-size: 0.75rem;
     }
 }
