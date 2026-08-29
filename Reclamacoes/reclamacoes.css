@@ -356,3 +356,75 @@ body {
   justify-content: center;
   margin-top: auto;
 }
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 768px) {
+
+    /* Cabeçalho */
+    .header {
+        width: 100%;
+        padding: 10px 15px;
+    }
+
+    .brand {
+        width: 100%;
+    }
+
+    .brand-text {
+        font-size: 18px;
+    }
+
+    /* Área principal */
+    main {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    /* Hero */
+    .hero {
+        width: 100%;
+        min-height: auto;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: none;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Título "O que você deseja fazer?" */
+    .options-section {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    /* Cards */
+    .options-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .option-card {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Footer */
+    footer {
+        width: 100%;
+    }
+}
