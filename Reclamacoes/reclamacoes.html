@@ -26,10 +26,23 @@
     </div>
 
     <div class="actions">
-      <a href="#" class="nav-link">Reclamações</a>
-      <button class="btn-primary">+ Nova Reclamação</button>
+      <a href="../Menu/index.html" class="nav-link">Menu Principal</a>
+      <button class="btn-primary">Abrir Reclamação</button>
     </div>
+
   </header>
+
+  <section class="tabs-panel" aria-label="Seções de reclamações">
+    <div class="tab-list" role="tablist" aria-label="Menu de reclamações">
+      <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="reclamacoes">
+        <span class="tab-label">Reclamações</span>
+        <span class="tab-count">3</span>
+      </button>
+      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="registrar">
+        <span class="tab-label">Registrar Reclamação</span>
+      </button>
+    </div>
+  </section>
 
   <!-- SIDEBAR -->
   <nav class="sidebar" id="sidebar">
@@ -43,25 +56,61 @@
   <!-- OVERLAY -->
   <div class="overlay" id="overlay"></div>
   
-  <main>
-    <div class="info-box">
-      <h2>
-        Sua voz transforma 
-        <br>
-        <span>a cidade.</span>
-      </h2>
-      <p>
-        Registre problemas urbanos, acompanhe o andamento e contribua para uma cidade melhor. Cada reclamação gera um protocolo oficial com prazo de resposta garantido.
-      </p>
-    </div>
-
-    <section class="opcoes">
-
-
-      
-
+  <main class="page-content">
+    <section class="tab-content active" id="reclamacoes" aria-label="Lista de reclamações">
+      <div class="card">
+        <h2>Minhas reclamações</h2>
+        <ul class="reclamacao-lista">
+          <li>
+            <span class="status pendente">Pendente</span>
+            <div>
+              <strong>Iluminação pública</strong>
+              <p>Poste quebrado na rua das Flores.</p>
+            </div>
+          </li>
+          <li>
+            <span class="status em-analise">Em análise</span>
+            <div>
+              <strong>Buraco na rua</strong>
+              <p>Vazamento de água no bairro centro.</p>
+            </div>
+          </li>
+          <li>
+            <span class="status resolvido">Resolvido</span>
+            <div>
+              <strong>Barulho excessivo</strong>
+              <p>Reclamação atendida pela prefeitura.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </section>
 
+    <section class="tab-content" id="registrar" aria-label="Registrar reclamação">
+      <div class="card form-card">
+        <h2>Registrar reclamação</h2>
+        <form class="form-reclamacao">
+          <div class="input-group">
+            <label for="titulo">Título</label>
+            <input id="titulo" type="text" placeholder="Ex: Buraco na rua">
+          </div>
+          <div class="input-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria">
+              <option>Infraestrutura</option>
+              <option>Segurança</option>
+              <option>Limpeza</option>
+              <option>Transporte</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" rows="4" placeholder="Descreva o problema..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary btn-form">Enviar Reclamação</button>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
