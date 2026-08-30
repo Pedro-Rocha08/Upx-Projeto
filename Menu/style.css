@@ -371,115 +371,166 @@ body {
 ========================= */
 
 @media (max-width: 768px) {
+  .header {
+    width: 100%;
+    padding: 10px 15px;
+    gap: 10px;
+  }
 
-    /* HEADER */
-    .header {
-        width: 100%;
-        padding: 10px 15px;
-        gap: 10px;
-    }
+  .brand {
+    gap: 10px;
+    min-width: 0;
+  }
 
-    .brand {
-        gap: 10px;
-        min-width: 0;
-    }
+  .brand-text h1 {
+    font-size: 1rem;
+  }
 
-    .brand-text h1 {
-        font-size: 1rem;
-    }
+  .brand-text span {
+    font-size: 0.65rem;
+  }
 
-    .brand-text span {
-        font-size: 0.65rem;
-    }
+  .actions {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 
-    .actions {
-        gap: 8px;
-    }
+  .nav-link {
+    font-size: 0.75rem;
+  }
 
-    .nav-link {
-        font-size: 0.75rem;
-    }
+  .btn-primary {
+    padding: 8px 10px;
+    font-size: 0.7rem;
+  }
 
-    .btn-primary {
-        padding: 8px 10px;
-        font-size: 0.7rem;
-    }
+  .info-box {
+    width: 100%;
+    padding: 50px 25px;
+    margin-bottom: 0;
+  }
 
+  .info-box h2 {
+    font-size: 2rem;
+    max-width: 300px;
+  }
 
-    /* =========================
-       ÁREA PRINCIPAL
-    ========================= */
+  .info-box p {
+    max-width: 300px;
+    margin-right: 0;
+    font-size: 0.95rem;
+  }
 
-    .info-box {
-        width: 100%;
-        padding: 50px 25px;
-        margin-bottom: 0;
-    }
+  .opcoes {
+    width: 100%;
+    max-width: 100%;
+    padding: 35px 20px;
+    margin: 0;
+  }
 
-    .info-box h2 {
-        font-size: 2rem;
-        max-width: 300px;
-    }
+  .opcoes h2 {
+    width: 100%;
+    padding-left: 0;
+    margin-bottom: 30px;
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 1.5px;
+  }
 
-    .info-box p {
-        max-width: 300px;
-        margin-right: 0;
-        font-size: 0.95rem;
-    }
+  .cards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
 
+  .card {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    min-height: 220px;
+    padding: 25px;
+  }
 
-    /* =========================
-       OPÇÕES
-    ========================= */
+  .card p {
+    max-width: 100%;
+  }
 
-    .opcoes {
-        width: 100%;
-        max-width: 100%;
-        padding: 35px 20px;
-        margin: 0;
-    }
+  .footer {
+    width: 100%;
+    padding: 18px 15px;
+    font-size: 0.75rem;
+  }
+}
 
-    .opcoes h2 {
-        width: 100%;
-        padding-left: 0;
-        margin-bottom: 30px;
-        font-size: 12px;
-        text-align: center;
-    }
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 12px;
+  }
 
+  .brand {
+    gap: 8px;
+  }
 
-    /* =========================
-       CARDS
-    ========================= */
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+  }
 
-    .cards {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-    }
+  .brand-text h1 {
+    font-size: 0.92rem;
+  }
 
-    .card {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        min-height: 220px;
-        padding: 25px;
-    }
+  .actions {
+    gap: 6px;
+  }
 
-    .card p {
-        max-width: 100%;
-    }
+  .nav-link {
+    display: none;
+  }
 
+  .btn-primary {
+    padding: 8px 12px;
+    font-size: 0.68rem;
+  }
 
-    /* =========================
-       FOOTER
-    ========================= */
+  .info-box {
+    padding: 36px 18px;
+  }
 
-    .footer {
-        width: 100%;
-        padding: 18px 15px;
-        font-size: 0.75rem;
-    }
+  .info-box h2 {
+    font-size: 1.7rem;
+    max-width: 100%;
+    line-height: 1.2;
+  }
+
+  .info-box p {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .opcoes {
+    padding: 24px 14px 30px;
+  }
+
+  .opcoes h2 {
+    font-size: 11px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    padding: 20px;
+    min-height: auto;
+  }
+
+  .card h3 {
+    font-size: 15px;
+  }
+
+  .card p {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
 }
