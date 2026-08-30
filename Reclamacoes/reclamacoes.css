@@ -409,16 +409,155 @@ body {
 }
 
 @media (max-width: 768px) {
+  .header {
+    width: 100%;
+    padding: 10px 15px;
+  }
 
-    /* HEADER */
-    .header {
-        width: 100%;
-        padding: 10px 15px;
-    }
+  .brand {
+    gap: 10px;
+    min-width: 0;
+  }
 
-   
-    /* FOOTER */
-    .footer {
-        width: 100%;
-    }
+  .brand-text h1 {
+    font-size: 1rem;
+  }
+
+  .actions {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav-link {
+    font-size: 0.75rem;
+  }
+
+  .btn-primary {
+    padding: 8px 10px;
+    font-size: 0.7rem;
+  }
+
+  .tabs-panel {
+    padding: 0 12px;
+  }
+
+  .tab-list {
+    flex-direction: column;
+  }
+
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 14px;
+  }
+
+  .tab-label {
+    min-height: auto;
+  }
+
+  .page-content {
+    width: min(100% - 20px, 1100px);
+    margin: 20px auto 0;
+  }
+
+  .card {
+    padding: 18px 16px;
+  }
+
+  .reclamacao-lista li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .status {
+    min-width: 90px;
+  }
+
+  .form-card {
+    max-width: 100%;
+  }
+
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    font-size: 0.95rem;
+  }
+
+  .footer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 12px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text h1 {
+    font-size: 0.92rem;
+  }
+
+  .actions {
+    gap: 6px;
+  }
+
+  .nav-link {
+    display: none;
+  }
+
+  .btn-primary {
+    padding: 8px 12px;
+    font-size: 0.68rem;
+  }
+
+  .tabs-panel {
+    padding: 0 8px;
+  }
+
+  .tab-btn {
+    font-size: 0.82rem;
+  }
+
+  .tab-count {
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.68rem;
+  }
+
+  .page-content {
+    width: calc(100% - 16px);
+  }
+
+  .card {
+    padding: 16px 14px;
+  }
+
+  .card h2 {
+    font-size: 1.1rem;
+  }
+
+  .reclamacao-lista li {
+    padding: 14px 12px;
+  }
+
+  .reclamacao-lista p {
+    font-size: 0.9rem;
+  }
+
+  .btn-form {
+    width: 100%;
+  }
 }
