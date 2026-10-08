@@ -56,6 +56,11 @@ body {
   text-decoration: none;
   color: var(--text);
 }
+.brand-link img {
+    width: 220px;
+    height: auto;
+    display: block;
+}
 .brand-link strong {
   display: block;
   font-size: 1.15rem;

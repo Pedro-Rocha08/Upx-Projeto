@@ -2,7 +2,7 @@ const seed = [
   {
     id: 1,
     title: "Ar-condicionado do bloco B",
-    description: "Salas com temperatura elevada durante as aulas da tarde.",
+    description: "Salas com temperatura elevada durante as aulas da manhã.",
     category: "Infraestrutura",
     location: "Bloco B • 2º andar",
     votes: 48,
@@ -11,10 +11,10 @@ const seed = [
   },
   {
     id: 2,
-    title: "Fila no restaurante universitário",
-    description: "Tempo de espera muito alto no intervalo do almoço.",
-    category: "Alimentação",
-    location: "RU • Prédio principal",
+    title: "Fila no estacionamento",
+    description: "Tempo de espera muito alto para entrar e sair do campus.",
+    category: "Infraestrutura",
+    location: "Vias do Campus",
     votes: 37,
     status: "Pendente",
     answered: false,
