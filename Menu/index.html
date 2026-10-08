@@ -1,115 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiscalize Aqui</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="brand">
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      <div class="brand-text">
-        <h1>Fiscalize Aqui</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Plataforma acadêmica de registro, avaliação e acompanhamento de problemas da Facens."
+    />
+    <title>Fiscalize Aqui</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <button
+          class="menu-btn"
+          id="menuBtn"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <a
+          class="brand-link"
+          href="index.html"
+          aria-label="Fiscalize Aqui - início"
+        >
+          <div><strong>Fiscalize Aqui</strong><small>Comunidade</small></div>
+        </a>
       </div>
-    </div>
-
-    <div class="actions">
-      <a href="#" class="nav-link">Reclamações</a>
-      <button class="btn-primary">Abrir Reclamação</button>
-    </div>
-  </header>
-
-  <!-- SIDEBAR -->
-  <nav class="sidebar" id="sidebar">
-    <ul class="sidebar-links">
-      <li><a href="../Menu/index.html">Início</a></li>
-      <li><a href="#">Minhas Reclamações</a></li>
-      <li><a href="#">Contato</a></li>
-    </ul>
-  </nav>
-
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
-  
-  <main>
-    <div class="info-box">
-      <h2>
-        Sua voz transforma 
-        <br>
-        <span>a cidade.</span>
-      </h2>
-      <p>
-        Registre problemas urbanos, acompanhe o andamento e contribua para uma cidade melhor. Cada reclamação gera um protocolo oficial com prazo de resposta garantido.
-      </p>
-    </div>
-
-    <section class="opcoes">
-
-      <h2>O QUE VOCÊ DESEJA FAZER?</h2>
-
-      <div class="cards" href="">
-
-          <a class="card destaque" href="">
-              <div class="icone">+</div>
-
-              <h3>Registrar Reclamação</h3>
-
-              <p>
-                  Abra um novo chamado com fotos e
-                  descrição detalhada da ocorrência.
-              </p>
-
-            </a>
-
-
-          <a class="card" href="../Reclamacoes/reclamacoes.html">
-              <div class="icone">▤</div>
-
-              <h3>Ver Reclamações</h3>
-
-              <p>
-                  Consulte o histórico completo de
-                  ocorrências registradas no sistema.
-              </p>
-
-          </a>
-
-
-          <a class="card">
-              <div class="icone">⌕</div>
-
-              <h3>Acompanhar Protocolo</h3>
-
-              <p>
-                  Consulte o andamento de uma
-                  reclamação pelo número de protocolo.
-              </p>
-
-          </a>
-
+      <div class="header-actions">
+        <a href="../Reclamacoes/reclamacoes.html" class="nav-link"
+          >Ver reclamações</a
+        >
+        <a href="../Reclamacoes/reclamacoes.html#registrar" class="btn-primary"
+          >+ Registrar problema</a
+        >
+        <button class="theme-btn" id="themeBtn" aria-label="Alternar tema">
+          ☾
+        </button>
       </div>
+    </header>
 
-    </section>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span>Menu</span
+        ><button id="closeMenu" aria-label="Fechar menu">×</button>
+      </div>
+      <nav>
+        <a href="index.html">⌂ <span>Início</span></a>
+        <a href="../Reclamacoes/reclamacoes.html">▤ <span>Reclamações</span></a>
+        <a href="../Reclamacoes/reclamacoes.html#registrar"
+          >＋ <span>Registrar problema</span></a
+        >
+        <a href="#como-funciona">? <span>Como funciona</span></a>
+      </nav>
+      <div class="sidebar-note">
+        <b>Objetivo</b>
+        <p>
+          Dar visibilidade aos problemas do campus e ajudar a comunidade e a
+          instituição a priorizá-los.
+        </p>
+      </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
 
-  </main>
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">COMUNIDADE</span>
+          <h1>Problemas visíveis.<br /><em>Prioridades claras.</em></h1>
+          <p>
+            Registre problemas encontrados na Facens, veja o que afeta mais
+            pessoas e acompanhe as respostas da instituição em um só lugar.
+          </p>
+          <div class="hero-actions">
+            <a
+              href="../Reclamacoes/reclamacoes.html#registrar"
+              class="btn-primary"
+              >Registrar reclamação</a
+            >
+            <a href="../Reclamacoes/reclamacoes.html" class="btn-secondary"
+              >Explorar reclamações →</a
+            >
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <span>🔥 Em destaque</span><span class="live-dot">● agora</span>
+          </div>
+          <div class="priority">#01</div>
+          <h2>Ar-condicionado do bloco B</h2>
+          <p>Salas com temperatura elevada durante as aulas da tarde.</p>
+          <div class="score-row">
+            <strong>92 pontos</strong><span>+ 48 concordam</span>
+          </div>
+          <div class="progress"><span style="width: 92%"></span></div>
+          <small>Alta prioridade para a comunidade</small>
+        </div>
+      </section>
 
-  <footer class="footer">
-    <p>&copy; 2024 Fiscalize Aqui. Todos os direitos reservados.</p>
-  </footer>
+      <section class="stats" aria-label="Resumo da plataforma">
+        <div>
+          <strong id="statOpen">12</strong><span>problemas abertos</span>
+        </div>
+        <div>
+          <strong id="statAnswered">7</strong
+          ><span>com resposta da Facens</span>
+        </div>
+        <div>
+          <strong id="statResolved">18</strong><span>já resolvidos</span>
+        </div>
+        <div><strong>1.2k</strong><span>participações</span></div>
+      </section>
 
-  <!-- JAVASCRIPT -->
-  <script src="script.js"></script>
-</body>
+      <section class="section" id="como-funciona">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">COMO FUNCIONA</span>
+            <h2>Da reclamação à prioridade.</h2>
+          </div>
+          <p>
+            A comunidade ajuda a indicar quais problemas merecem atenção
+            primeiro.
+          </p>
+        </div>
+        <div class="steps">
+          <article>
+            <span>01</span>
+            <h3>Registre</h3>
+            <p>
+              Descreva o problema, informe o local e, se quiser, adicione fotos.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Avalie</h3>
+            <p>
+              Outros alunos podem concordar e indicar que aquela ocorrência
+              também os afeta.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Priorize</h3>
+            <p>
+              Quanto maior a relevância, maior a posição do problema na fila de
+              atenção.
+            </p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Acompanhe</h3>
+            <p>
+              A instituição pode responder, atualizar o status e registrar a
+              solução.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section preview-section">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">EM ALTA</span>
+            <h2>O que a comunidade está apontando?</h2>
+          </div>
+          <a href="../Reclamacoes/reclamacoes.html">Ver todas →</a>
+        </div>
+        <div id="homeComplaints" class="preview-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Fiscalize Aqui</span
+      ><span>Projeto acadêmico • Engenharia da Computação</span>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>

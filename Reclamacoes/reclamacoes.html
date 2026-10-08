@@ -1,123 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiscalize Aqui</title>
-  <link rel="stylesheet" href="reclamacoes.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="brand">
-      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      <div class="brand-text">
-        <h1>Fiscalize Aqui</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Reclamações da comunidade Facens." />
+    <title>Reclamações • Fiscalize Aqui</title>
+    <link rel="stylesheet" href="reclamacoes.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
+          <span></span><span></span><span></span></button
+        ><a class="brand-link" href="../Menu/index.html"
+          ><div><strong>Fiscalize</strong><small>Comunidade</small></div></a
+        >
+      </div>
+      <div class="header-actions">
+        <a href="../Menu/index.html" class="nav-link">Início</a
+        ><button class="theme-btn" id="themeBtn">☾</button>
+      </div>
+    </header>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <span>Menu</span><button id="closeMenu">×</button>
+      </div>
+      <nav>
+        <a href="../Menu/index.html">⌂ <span>Início</span></a
+        ><a href="reclamacoes.html">▤ <span>Reclamações</span></a
+        ><a href="#registrar">＋ <span>Registrar problema</span></a>
+      </nav>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+    <div class="tabs-panel">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="feed">
+          Reclamações <b id="countBadge">0</b></button
+        ><button class="tab-btn" data-tab="registrar">
+          Registrar reclamação
+        </button>
       </div>
     </div>
-
-    <div class="actions">
-      <a href="../Menu/index.html" class="nav-link">Menu Principal</a>
-      <button class="btn-primary">Abrir Reclamação</button>
-    </div>
-
-  </header>
-
-  <section class="tabs-panel" aria-label="Seções de reclamações">
-    <div class="tab-list" role="tablist" aria-label="Menu de reclamações">
-      <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="reclamacoes">
-        <span class="tab-label">Reclamações</span>
-        <span class="tab-count">3</span>
-      </button>
-      <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="registrar">
-        <span class="tab-label">Registrar Reclamação</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- SIDEBAR -->
-  <nav class="sidebar" id="sidebar">
-    <ul class="sidebar-links">
-      <li><a href="../Menu/index.html">Início</a></li>
-      <li><a href="#">Minhas Reclamações</a></li>
-      <li><a href="#">Contato</a></li>
-    </ul>
-  </nav>
-
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
-  
-  <main class="page-content">
-    <section class="tab-content active" id="reclamacoes" aria-label="Lista de reclamações">
-      <div class="card">
-        <h2>Minhas reclamações</h2>
-        <ul class="reclamacao-lista">
-          <li>
-            <span class="status pendente">Pendente</span>
-            <div>
-              <strong>Iluminação pública</strong>
-              <p>Poste quebrado na rua das Flores.</p>
-            </div>
-          </li>
-          <li>
-            <span class="status em-analise">Em análise</span>
-            <div>
-              <strong>Buraco na rua</strong>
-              <p>Vazamento de água no bairro centro.</p>
-            </div>
-          </li>
-          <li>
-            <span class="status resolvido">Resolvido</span>
-            <div>
-              <strong>Barulho excessivo</strong>
-              <p>Reclamação atendida pela prefeitura.</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="tab-content" id="registrar" aria-label="Registrar reclamação">
-      <div class="card form-card">
-        <h2>Registrar reclamação</h2>
-        <form class="form-reclamacao">
-          <div class="input-group">
-            <label for="titulo">Título</label>
-            <input id="titulo" type="text" placeholder="Ex: Buraco na rua">
+    <main class="page-content">
+      <section class="tab-content active" id="feed">
+        <div class="feed-head">
+          <div>
+            <span class="eyebrow">COMUNIDADE FACENS</span>
+            <h1>Reclamações em destaque</h1>
+            <p>
+              Vote nos problemas que também afetam você. A relevância da
+              comunidade ajuda a organizar as prioridades.
+            </p>
           </div>
-          <div class="input-group">
-            <label for="categoria">Categoria</label>
-            <select id="categoria">
-              <option>Infraestrutura</option>
-              <option>Segurança</option>
-              <option>Limpeza</option>
-              <option>Transporte</option>
-            </select>
+          <button class="btn-primary" id="openForm">+ Nova reclamação</button>
+        </div>
+        <div class="toolbar">
+          <div class="filters">
+            <button class="filter active" data-filter="all">Todas</button
+            ><button class="filter" data-filter="priority">
+              Maior prioridade</button
+            ><button class="filter" data-filter="unanswered">
+              Sem resposta</button
+            ><button class="filter" data-filter="resolved">Resolvidas</button>
           </div>
-          <div class="input-group">
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" rows="4" placeholder="Descreva o problema..."></textarea>
-          </div>
-          <button type="submit" class="btn-primary btn-form">Enviar Reclamação</button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2024 Fiscalize Aqui. Todos os direitos reservados.</p>
-  </footer>
-
-  <!-- JAVASCRIPT -->
-  <script src="reclamacoes.js"></script>
-</body>
+          <input
+            id="search"
+            type="search"
+            placeholder="Pesquisar reclamação..."
+          />
+        </div>
+        <div id="complaintList" class="complaint-list"></div>
+      </section>
+      <section class="tab-content" id="registrar">
+        <div class="form-card">
+          <span class="eyebrow">NOVA OCORRÊNCIA</span>
+          <h2>O que está acontecendo?</h2>
+          <p class="form-intro">
+            Quanto mais contexto você fornecer, mais fácil será para a
+            comunidade e para a instituição entenderem o problema.
+          </p>
+          <form id="complaintForm">
+            <label
+              >Título<input
+                id="titulo"
+                required
+                maxlength="80"
+                placeholder="Ex.: Ar-condicionado não funciona"
+            /></label>
+            <div class="two-col">
+              <label
+                >Categoria<select id="categoria">
+                  <option>Infraestrutura</option>
+                  <option>Segurança</option>
+                  <option>Limpeza</option>
+                  <option>Tecnologia</option>
+                  <option>Alimentação</option>
+                  <option>Atendimento</option>
+                  <option>Outro</option>
+                </select></label
+              ><label
+                >Local<input
+                  id="local"
+                  required
+                  placeholder="Ex.: Bloco A, sala 204"
+              /></label>
+            </div>
+            <label
+              >Descrição<textarea
+                id="descricao"
+                required
+                maxlength="500"
+                rows="5"
+                placeholder="Explique o que aconteceu, quando ocorre e quem é afetado..."
+              ></textarea></label
+            ><label
+              >Foto <span class="optional">(opcional)</span
+              ><input id="foto" type="file" accept="image/*"
+            /></label>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="cancelForm">
+                Cancelar</button
+              ><button class="btn-primary" type="submit">
+                Publicar reclamação
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span>© 2026 Fiscalize Aqui</span><span>Projeto acadêmico</span>
+    </footer>
+    <script src="reclamacoes.js"></script>
+  </body>
 </html>
