@@ -456,6 +456,126 @@ footer {
   color: var(--muted);
   font-size: 0.7rem;
 }
+
+
+/* Cartões de reclamação — computador */
+.complaint {
+  display: grid;
+  grid-template-columns: 64px 112px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.complaint .vote-box {
+  grid-column: 1;
+  grid-row: 1;
+  width: 64px;
+  box-sizing: border-box;
+}
+
+.complaint .complaint-score {
+  grid-column: 2;
+  grid-row: 1;
+  width: 112px;
+  min-width: 0;
+  min-height: 72px;
+  box-sizing: border-box;
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.complaint .complaint-score strong {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.complaint .complaint-score small {
+  font-size: 0.7rem;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+.complaint > div:not(.vote-box):not(.complaint-score):not(.response) {
+  grid-column: 3;
+  grid-row: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.complaint > .status {
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: end;
+}
+
+.complaint > .response {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Cartões de reclamação — celular */
+@media (max-width: 700px) {
+  .complaint {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .complaint .vote-box {
+    grid-column: 1;
+    grid-row: 1;
+    width: 52px;
+    padding: 8px 3px;
+  }
+
+  .complaint .complaint-score {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: fit-content;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 7px;
+    padding: 7px 10px;
+  }
+
+  .complaint .complaint-score strong {
+    font-size: 1rem;
+  }
+
+  .complaint .complaint-score small {
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .complaint > div:not(.vote-box):not(.complaint-score):not(.response) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .complaint > .status {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
+  }
+
+  .complaint > .response {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    margin-top: 2px;
+  }
+}
+
+
 @media (max-width: 700px) {
   .header {
     padding: 0 14px;
@@ -478,12 +598,6 @@ footer {
   .toolbar input {
     width: 100%;
     margin-top: 10px;
-  }
-  .complaint {
-    grid-template-columns: 50px 1fr;
-  }
-  .complaint > .status {
-    grid-column: 2;
   }
   .response {
     grid-column: 2;

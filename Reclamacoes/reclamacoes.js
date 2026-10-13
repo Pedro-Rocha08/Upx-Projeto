@@ -73,6 +73,24 @@ function getData() {
 function save(d) {
   localStorage.setItem("fiscalizeComplaints", JSON.stringify(d));
 }
+function calculatePriority(complaint) {
+  const votes = Math.max(0, Number(complaint.votes) || 0);
+
+  const createdAt = Number(complaint.id);
+  const ageInDays = Number.isFinite(createdAt)
+    ? Math.max(0, (Date.now() - createdAt) / 86400000)
+    : 0;
+
+  // Apoios: pontuação com limite para evitar que números
+  // muito altos dominem completamente o ranking.
+  const supportScore = Math.min(100, votes * 2);
+
+  // Tempo: aumenta gradualmente, até atingir 100 pontos.
+  const timeScore = Math.min(100, ageInDays * 5);
+
+  // Prioridade provisória: 80% apoios e 20% tempo.
+  return Math.round(supportScore * 0.8 + timeScore * 0.2);
+}
 let data = getData(),
   currentFilter = "all";
 const list = document.getElementById("complaintList"),
@@ -103,7 +121,7 @@ function render() {
       const matches = text.includes(q);
       const filter =
         currentFilter === "priority"
-          ? c.votes >= 30
+          ? calculatePriority(c) >= 60
           : currentFilter === "unanswered"
             ? !c.answered
             : currentFilter === "resolved"
@@ -111,19 +129,22 @@ function render() {
               : true;
       return matches && filter;
     })
-    .sort((a, b) => b.votes - a.votes);
+    .sort((a, b) => calculatePriority(b) - calculatePriority(a));
   count.textContent = data.length;
   list.innerHTML = out.length
     ? out
         .map(
           (c) =>
-            `<article class="complaint"><div class="vote-box"><button onclick="vote(${c.id})" aria-label="Concordo com esta reclamação">▲</button><strong>${c.votes}</strong><small>apoios</small></div><div><div class="complaint-meta"><span class="badge">${c.category}</span><span>${c.answered ? "● resposta da instituição" : "● aguardando resposta"}</span></div><h3>${c.title}</h3><p class="complaint-desc">${c.description}</p><div class="location">⌖ ${c.location}</div></div><span class="status ${statusClass(c.status)}">${c.status}</span>${c.response ? `<div class="response"><strong>Resposta da instituição:</strong> ${c.response}</div>` : ""}</article>`,
+            `<article class="complaint"><div class="vote-box"><button onclick="vote(${c.id})" aria-label="Concordo com esta reclamação">▲</button><strong>${c.votes}</strong><small>apoios</small></div><div class="complaint-score"><strong>${calculatePriority(c)}</strong><small>pontos de prioridade</small></div><div><div class="complaint-meta"><span class="badge">${c.category}</span><span>${c.answered ? "● resposta da instituição" : "● aguardando resposta"}</span></div><h3>${c.title}</h3><p class="complaint-desc">${c.description}</p><div class="location">⌖ ${c.location}</div></div><span class="status ${statusClass(c.status)}">${c.status}</span>${c.response ? `<div class="response"><strong>Resposta da instituição:</strong> ${c.response}</div>` : ""}</article>`,
         )
         .join("")
     : '<div class="form-card" style="text-align:center"><h2>Nenhuma reclamação encontrada</h2><p class="form-intro">Tente outro filtro ou registre um novo problema.</p></div>';
 }
 function vote(id) {
-  data = data.map((c) => (c.id === id ? { ...c, votes: c.votes + 1 } : c));
+  data = data.map((c) =>
+    c.id === id ? { ...c, votes: (Number(c.votes) || 0) + 1 } : c,
+  );
+
   save(data);
   render();
 }
