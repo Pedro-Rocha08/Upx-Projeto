@@ -191,8 +191,20 @@ menuBtn.addEventListener("click", () => setMenu(true));
 closeMenu.addEventListener("click", () => setMenu(false));
 overlay.addEventListener("click", () => setMenu(false));
 const themeBtn = document.getElementById("themeBtn");
+function updateLogo() {
+  const logo = document.querySelector(".brand-link img");
+
+  if (!logo) return;
+
+  const dark = document.documentElement.dataset.theme === "dark";
+
+  logo.src = dark
+    ? "../Menu/assets/logo-nightmode.png"
+    : "../Menu/assets/logo.png";
+}
 if (localStorage.getItem("fiscalizeTheme") === "dark")
   document.documentElement.dataset.theme = "dark";
+updateLogo();
 function icon() {
   themeBtn.textContent =
     document.documentElement.dataset.theme === "dark" ? "☀" : "☾";
@@ -203,5 +215,6 @@ themeBtn.addEventListener("click", () => {
   document.documentElement.dataset.theme = dark ? "" : "dark";
   localStorage.setItem("fiscalizeTheme", dark ? "light" : "dark");
   icon();
+  updateLogo();
 });
 render();

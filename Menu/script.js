@@ -68,7 +68,17 @@ closeMenu?.addEventListener("click", () => setMenu(false));
 overlay?.addEventListener("click", () => setMenu(false));
 const themeBtn = document.getElementById("themeBtn");
 const saved = localStorage.getItem("fiscalizeTheme");
+function updateLogo() {
+  const logo = document.querySelector(".brand-link img");
+
+  if (!logo) return;
+
+  const dark = document.documentElement.dataset.theme === "dark";
+
+  logo.src = dark ? "assets/logo-nightmode.png" : "assets/logo.png";
+}
 if (saved === "dark") document.documentElement.dataset.theme = "dark";
+updateLogo();
 function updateThemeIcon() {
   themeBtn.textContent =
     document.documentElement.dataset.theme === "dark" ? "☀" : "☾";
@@ -79,5 +89,6 @@ themeBtn?.addEventListener("click", () => {
   document.documentElement.dataset.theme = dark ? "" : "dark";
   localStorage.setItem("fiscalizeTheme", dark ? "light" : "dark");
   updateThemeIcon();
+  updateLogo();
 });
 renderHome();
