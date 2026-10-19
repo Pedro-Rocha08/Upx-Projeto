@@ -135,7 +135,20 @@ function render() {
     ? out
         .map(
           (c) =>
-            `<article class="complaint"><div class="vote-box"><button onclick="vote(${c.id})" aria-label="Concordo com esta reclamação">▲</button><strong>${c.votes}</strong><small>apoios</small></div><div class="complaint-score"><strong>${calculatePriority(c)}</strong><small>pontos de prioridade</small></div><div><div class="complaint-meta"><span class="badge">${c.category}</span><span>${c.answered ? "● resposta da instituição" : "● aguardando resposta"}</span></div><h3>${c.title}</h3><p class="complaint-desc">${c.description}</p><div class="location">⌖ ${c.location}</div></div><span class="status ${statusClass(c.status)}">${c.status}</span>${c.response ? `<div class="response"><strong>Resposta da instituição:</strong> ${c.response}</div>` : ""}</article>`,
+            `<article class="complaint">
+              <div class="vote-box">
+                <button
+                  type="button"
+                  onclick="vote(${c.id})"
+                  class="${getVotedComplaints().includes(String(c.id)) ? "voted" : ""}"
+                  aria-label="${getVotedComplaints().includes(String(c.id)) ? "Retirar meu apoio" : "Apoiar esta reclamação"}"
+                  aria-pressed="${getVotedComplaints().includes(String(c.id))}"
+                  title="${getVotedComplaints().includes(String(c.id)) ? "Você já apoiou esta reclamação" : "Apoiar esta reclamação"}"
+                >▲</button>
+                <strong>${c.votes}</strong>
+                <small>apoios</small>
+              </div>
+              <div class="complaint-score"><strong>${calculatePriority(c)}</strong><small>pontos de prioridade</small></div><div><div class="complaint-meta"><span class="badge">${c.category}</span><span>${c.answered ? "● resposta da instituição" : "● aguardando resposta"}</span></div><h3>${c.title}</h3><p class="complaint-desc">${c.description}</p><div class="location">⌖ ${c.location}</div></div><span class="status ${statusClass(c.status)}">${c.status}</span>${c.response ? `<div class="response"><strong>Resposta da instituição:</strong> ${c.response}</div>` : ""}</article>`,
         )
         .join("")
     : '<div class="form-card" style="text-align:center"><h2>Nenhuma reclamação encontrada</h2><p class="form-intro">Tente outro filtro ou registre um novo problema.</p></div>';

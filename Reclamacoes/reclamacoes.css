@@ -740,3 +740,93 @@ footer {
     animation: none;
   }
 }
+
+/* Botão de apoio já utilizado */
+.vote-box button.voted {
+  background: #006eaf;
+  color: #ffffff;
+  border-color: #006eaf;
+  box-shadow: 0 0 0 3px rgba(0, 110, 175, 0.15);
+}
+
+.vote-box button.voted:hover {
+  background: #00578c;
+  color: #ffffff;
+}
+
+.vote-box button:focus-visible {
+  outline: 3px solid rgba(0, 110, 175, 0.4);
+  outline-offset: 3px;
+}
+
+
+/* Mantém o botão de apoio no formato original */
+.vote-box button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 30px;
+  margin: 0 auto;
+  padding: 5px 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.2;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Destaque para reclamações já apoiadas */
+.vote-box button.voted {
+  background: #006eaf;
+  color: #ffffff;
+  border-color: #006eaf;
+  box-shadow: 0 0 0 3px rgba(0, 110, 175, 0.15);
+}
+
+.vote-box button.voted:hover {
+  background: #00578c;
+  color: #ffffff;
+}
+
+.vote-box button:focus-visible {
+  outline: 3px solid rgba(0, 110, 175, 0.4);
+  outline-offset: 3px;
+}
+
+.vote-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.vote-box button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  min-height: 30px;
+  padding: 4px;
+  margin: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.vote-box strong,
+.vote-box small {
+  display: block;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.vote-box.voted button,
+.vote-box button.voted {
+  background: #006eaf;
+  color: #ffffff;
+  border-color: #006eaf;
+}
