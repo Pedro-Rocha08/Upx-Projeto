@@ -140,7 +140,109 @@ function render() {
         .join("")
     : '<div class="form-card" style="text-align:center"><h2>Nenhuma reclamação encontrada</h2><p class="form-intro">Tente outro filtro ou registre um novo problema.</p></div>';
 }
+
+function getVotedComplaints() {
+  try {
+    const voted = JSON.parse(localStorage.getItem("fiscalizeVotedComplaints"));
+
+    return Array.isArray(voted) ? voted : [];
+  } catch {
+    return [];
+  }
+}
+
+function showWithdrawSupportModal(id) {
+  // Evita criar duas janelas ao mesmo tempo.
+  document.getElementById("support-modal")?.remove();
+
+  const modal = document.createElement("div");
+  modal.id = "support-modal";
+  modal.className = "support-modal-overlay";
+
+  modal.innerHTML = `
+    <div class="support-modal" role="dialog"
+         aria-modal="true"
+         aria-labelledby="support-modal-title">
+      <div class="support-modal-icon">↑</div>
+
+      <h3 id="support-modal-title">Apoio registrado</h3>
+
+      <p>
+        Você já deu seu apoio nesta reclamação.
+        Gostaria de retirar seu apoio?
+      </p>
+
+      <div class="support-modal-actions">
+        <button type="button" class="support-cancel">
+          Manter apoio
+        </button>
+
+        <button type="button" class="support-remove">
+          Retirar apoio
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Fecha sem alterar a contagem.
+  function closeModal() {
+    modal.remove();
+  }
+
+  modal.querySelector(".support-cancel").addEventListener("click", closeModal);
+
+  // Também fecha se clicar fora da janela.
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Retira o apoio e atualiza os dados.
+  modal.querySelector(".support-remove").addEventListener("click", () => {
+    const votedComplaints = getVotedComplaints().filter(
+      (votedId) => votedId !== String(id),
+    );
+
+    localStorage.setItem(
+      "fiscalizeVotedComplaints",
+      JSON.stringify(votedComplaints),
+    );
+
+    data = data.map((c) =>
+      c.id === id
+        ? {
+            ...c,
+            votes: Math.max(0, (Number(c.votes) || 0) - 1),
+          }
+        : c,
+    );
+
+    save(data);
+    closeModal();
+    render();
+  });
+}
+
 function vote(id) {
+  const votedComplaints = getVotedComplaints();
+
+  // Se já apoiou, pergunta se deseja retirar.
+  if (votedComplaints.includes(String(id))) {
+    showWithdrawSupportModal(id);
+    return;
+  }
+
+  // Registra o novo apoio.
+  votedComplaints.push(String(id));
+
+  localStorage.setItem(
+    "fiscalizeVotedComplaints",
+    JSON.stringify(votedComplaints),
+  );
+
   data = data.map((c) =>
     c.id === id ? { ...c, votes: (Number(c.votes) || 0) + 1 } : c,
   );
@@ -148,6 +250,7 @@ function vote(id) {
   save(data);
   render();
 }
+
 window.vote = vote;
 document.querySelectorAll(".filter").forEach((b) =>
   b.addEventListener("click", () => {
