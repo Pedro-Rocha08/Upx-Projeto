@@ -24,8 +24,9 @@
         </a>
       </div>
       <div class="header-actions">
-        <a href="../Menu/index.html" class="nav-link">Início</a
-        ><button class="theme-btn" id="themeBtn">☾</button>
+        <a href="../Menu/index.html" class="nav-link">Início</a>
+        <a href="perfil.html" class="nav-link" id="profileLink">Meu perfil</a>
+        <button class="theme-btn" id="themeBtn"></button>
       </div>
     </header>
     <aside class="sidebar" id="sidebar">
@@ -141,5 +142,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
     <script src="reclamacoes.js"></script>
+
+    <script>
+      (async function () {
+        const supabase = window.supabaseClient;
+
+        if (!supabase) {
+          window.location.replace("conta.html");
+          return;
+        }
+
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error || !data.session) {
+          window.location.replace("conta.html");
+        }
+      })();
+    </script>
   </body>
 </html>

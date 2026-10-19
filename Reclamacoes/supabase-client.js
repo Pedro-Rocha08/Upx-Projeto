@@ -1,4 +1,3 @@
-
 const SUPABASE_URL = "https://cmzovqlmypbcbnttkrdw.supabase.co";
 
 // Cole aqui sua chave pública sb_publishable_.

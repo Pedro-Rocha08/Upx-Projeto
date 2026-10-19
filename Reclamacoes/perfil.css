@@ -1,0 +1,163 @@
+/* Página de perfil */
+.profile-page {
+  width: min(760px, calc(100% - 32px));
+  margin: 40px auto;
+}
+
+.profile-card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #d7e2ed);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 12px 32px rgba(20, 50, 80, 0.06);
+}
+
+.profile-card h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+}
+
+.profile-description {
+  color: var(--text-muted, #64748b);
+  margin-bottom: 24px;
+}
+
+.profile-details {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.profile-detail {
+  padding: 14px 16px;
+  border: 1px solid var(--border-color, #d7e2ed);
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.profile-detail strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.profile-detail span {
+  color: var(--text-muted, #64748b);
+}
+
+.profile-status {
+  margin-top: 12px;
+}
+
+.profile-logout {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  background: #b42318;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-logout:hover {
+  background: #912018;
+}
+
+.profile-logout:focus-visible {
+  outline: 3px solid #f3a6a0;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .profile-page {
+    margin: 24px auto;
+  }
+
+  .profile-card {
+    padding: 22px;
+  }
+
+  .profile-card h1 {
+    font-size: 1.65rem;
+  }
+}
+
+.profile-name-form {
+  display: grid;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.profile-name-form label {
+  font-weight: 600;
+}
+
+.profile-name-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color, #d7e2ed);
+  border-radius: 10px;
+  background: var(--card-bg, #fff);
+  color: inherit;
+  font: inherit;
+}
+
+.profile-name-form input:focus {
+  outline: 2px solid #64748b;
+  outline-offset: 2px;
+}
+
+.profile-name-form button {
+  justify-self: start;
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.my-complaints {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color, #d7e2ed);
+}
+
+.my-complaints h2 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+
+.my-complaint-item {
+  padding: 16px;
+  margin-top: 14px;
+  border: 1px solid var(--border-color, #d7e2ed);
+  border-radius: 12px;
+}
+
+.my-complaint-item h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.my-complaint-item p {
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+
+.my-complaint-status {
+  font-size: 0.9rem;
+  color: var(--text-muted, #64748b);
+}
+
+.supported-complaints {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color, #d7e2ed);
+}
+
+.supported-complaints h2 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}

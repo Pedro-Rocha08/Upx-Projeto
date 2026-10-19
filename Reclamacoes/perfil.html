@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu perfil | Fiscalize Aqui</title>
+    <link rel="stylesheet" href="reclamacoes.css" />
+    <link rel="stylesheet" href="perfil.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <a class="brand-link" href="../Menu/index.html">
+          <img
+            src="../Menu/assets/logo.png"
+            data-logo-light="../Menu/assets/logo.png"
+            data-logo-dark="../Menu/assets/logo-nightmode.png"
+            alt="Fiscalize Aqui"
+            class="site-logo"
+          />
+        </a>
+      </div>
+
+      <div class="header-actions">
+        <a href="reclamacoes.html" class="nav-link">Reclamações</a>
+        <button
+          class="theme-btn"
+          id="themeBtn"
+          aria-label="Alternar tema"
+        ></button>
+      </div>
+    </header>
+
+    <main class="profile-page">
+      <section class="profile-card">
+        <h1>Meu perfil</h1>
+        <p class="profile-description">
+          Informações da sua conta no Fiscalize Aqui.
+        </p>
+
+        <div
+          id="profileMessage"
+          class="profile-status"
+          role="status"
+          aria-live="polite"
+        >
+          Carregando seu perfil...
+        </div>
+
+        <div class="profile-name-form">
+          <label for="displayName">Nome de exibição</label>
+
+          <input
+            type="text"
+            id="displayName"
+            placeholder="Como você quer aparecer no sistema"
+            maxlength="50"
+          />
+
+          <button type="button" id="saveProfileBtn">Salvar nome</button>
+        </div>
+
+        <div id="profileInfo" hidden>
+          <div class="profile-details">
+            <p class="profile-detail">
+              <strong>E-mail:</strong>
+              <span id="profileEmail"></span>
+            </p>
+
+            <p class="profile-detail">
+              <strong>ID da conta:</strong>
+              <span id="profileId"></span>
+            </p>
+          </div>
+        </div>
+
+        <section class="my-complaints">
+          <h2>Minhas reclamações</h2>
+          <p class="profile-description">
+            Reclamações que você publicou no Fiscalize Aqui.
+          </p>
+
+          <div id="myComplaintsList" aria-live="polite">
+            Carregando suas reclamações...
+          </div>
+        </section>
+
+        <section class="supported-complaints">
+          <h2>Reclamações apoiadas</h2>
+          <p class="profile-description">
+            Reclamações que você ajudou a priorizar.
+          </p>
+
+          <div id="supportedComplaintsList" aria-live="polite">
+            Carregando reclamações apoiadas...
+          </div>
+        </section>
+
+        <button type="button" id="logoutBtn" class="profile-logout" hidden>
+          Sair da conta
+        </button>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    
+    <script>
+      (async function () {
+        const supabase = window.supabaseClient;
+
+        if (!supabase) {
+          window.location.replace("conta.html");
+          return;
+        }
+
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error || !data.session) {
+          window.location.replace("conta.html");
+        }
+      })();
+    </script>
+
+    <script>
+      const supportedComplaintsList = document.getElementById(
+        "supportedComplaintsList",
+      );
+      const message = document.getElementById("profileMessage");
+      const profileInfo = document.getElementById("profileInfo");
+      const emailElement = document.getElementById("profileEmail");
+      const idElement = document.getElementById("profileId");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const displayNameInput = document.getElementById("displayName");
+      const saveProfileBtn = document.getElementById("saveProfileBtn");
+      const myComplaintsList = document.getElementById("myComplaintsList");
+
+      async function loadProfile() {
+        const supabase = window.supabaseClient;
+
+        if (!supabase) {
+          message.textContent = "Não foi possível conectar ao banco de dados.";
+          return;
+        }
+
+        const { data, error } = await supabase.auth.getUser();
+
+        if (error || !data.user) {
+          message.textContent =
+            "Você precisa entrar na sua conta para ver o perfil.";
+          return;
+        }
+
+        emailElement.textContent = data.user.email || "Não informado";
+        idElement.textContent = data.user.id;
+        displayNameInput.value = data.user.user_metadata?.display_name || "";
+        loadMyComplaints(data.user.id);
+        loadSupportedComplaints(data.user.id);
+        profileInfo.hidden = false;
+        logoutBtn.hidden = false;
+        message.textContent = "Você está conectado.";
+      }
+
+      async function loadMyComplaints(userId) {
+        myComplaintsList.textContent = "Carregando suas reclamações...";
+
+        const { data, error } = await window.supabaseClient
+          .from("complaints")
+          .select("id, title, description, status, created_at")
+          .eq("user_id", userId)
+          .order("created_at", { ascending: false });
+
+        if (error) {
+          console.error("Erro ao carregar reclamações:", error);
+          myComplaintsList.textContent =
+            "Não foi possível carregar suas reclamações.";
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          myComplaintsList.textContent =
+            "Você ainda não publicou nenhuma reclamação.";
+          return;
+        }
+
+        myComplaintsList.replaceChildren();
+
+        data.forEach((complaint) => {
+          const item = document.createElement("article");
+          item.className = "my-complaint-item";
+
+          const title = document.createElement("h3");
+          title.textContent = complaint.title || "Reclamação sem título";
+
+          const description = document.createElement("p");
+          description.textContent = complaint.description || "Sem descrição.";
+
+          const status = document.createElement("p");
+          status.className = "my-complaint-status";
+          status.textContent = `Status: ${complaint.status || "Não informado"}`;
+
+          item.append(title, description, status);
+          myComplaintsList.appendChild(item);
+        });
+      }
+
+      async function loadSupportedComplaints(userId) {
+        supportedComplaintsList.textContent =
+          "Carregando reclamações apoiadas...";
+
+        // Busca os apoios feitos pelo usuário autenticado.
+        const { data: votes, error: votesError } = await window.supabaseClient
+          .from("complaint_votes")
+          .select("complaint_id, created_at")
+          .eq("user_id", userId)
+          .order("created_at", { ascending: false });
+
+        if (votesError) {
+          console.error("Erro ao buscar apoios:", votesError);
+          supportedComplaintsList.textContent =
+            "Não foi possível carregar as reclamações apoiadas.";
+          return;
+        }
+
+        if (!votes || votes.length === 0) {
+          supportedComplaintsList.textContent =
+            "Você ainda não apoiou nenhuma reclamação.";
+          return;
+        }
+
+        const complaintIds = [
+          ...new Set(votes.map((vote) => vote.complaint_id)),
+        ];
+
+        const { data: complaints, error: complaintsError } =
+          await window.supabaseClient
+            .from("complaints")
+            .select("id, title, description, status")
+            .in("id", complaintIds);
+
+        if (complaintsError) {
+          console.error(
+            "Erro ao buscar reclamações apoiadas:",
+            complaintsError,
+          );
+          supportedComplaintsList.textContent =
+            "Não foi possível carregar as reclamações apoiadas.";
+          return;
+        }
+
+        const complaintsById = new Map(
+          (complaints || []).map((complaint) => [complaint.id, complaint]),
+        );
+
+        supportedComplaintsList.replaceChildren();
+
+        complaintIds.forEach((id) => {
+          const complaint = complaintsById.get(id);
+
+          // Ignora reclamações que não estejam acessíveis para esta conta.
+          if (!complaint) return;
+
+          const item = document.createElement("article");
+          item.className = "my-complaint-item";
+
+          const title = document.createElement("h3");
+          title.textContent = complaint.title || "Reclamação sem título";
+
+          const description = document.createElement("p");
+          description.textContent = complaint.description || "Sem descrição.";
+
+          const status = document.createElement("p");
+          status.className = "my-complaint-status";
+          status.textContent = `Status: ${complaint.status || "Não informado"}`;
+
+          item.append(title, description, status);
+          supportedComplaintsList.appendChild(item);
+        });
+
+        if (!supportedComplaintsList.hasChildNodes()) {
+          supportedComplaintsList.textContent =
+            "Nenhuma reclamação apoiada está disponível para exibição.";
+        }
+      }
+
+      saveProfileBtn.addEventListener("click", async () => {
+        const displayName = displayNameInput.value.trim();
+
+        if (!displayName) {
+          message.textContent = "Digite um nome antes de salvar.";
+          displayNameInput.focus();
+          return;
+        }
+
+        saveProfileBtn.disabled = true;
+        message.textContent = "Salvando nome...";
+
+        const { error } = await window.supabaseClient.auth.updateUser({
+          data: {
+            display_name: displayName,
+          },
+        });
+
+        saveProfileBtn.disabled = false;
+
+        if (error) {
+          message.textContent =
+            "Não foi possível salvar o nome. Tente novamente.";
+          console.error("Erro ao salvar nome:", error);
+          return;
+        }
+
+        message.textContent = "Nome salvo com sucesso!";
+      });
+
+      logoutBtn.addEventListener("click", async () => {
+        const { error } = await window.supabaseClient.auth.signOut();
+
+        if (error) {
+          message.textContent =
+            "Não foi possível sair da conta. Tente novamente.";
+          return;
+        }
+
+        window.location.href = "conta.html";
+      });
+
+      loadProfile();
+    </script>
+  </body>
+</html>

@@ -137,11 +137,19 @@ async function loadComplaintsFromSupabase() {
 
   localStorage.setItem("fiscalizeVotedComplaints", JSON.stringify(myVotes));
 
+  const { data: counts, error: countsError } = await supabase.rpc(
+    "get_complaint_vote_counts",
+  );
+
+  if (countsError) {
+    console.error("Erro ao contar apoios:", countsError);
+    return;
+  }
+
   const voteCounts = {};
 
-  votes.forEach((vote) => {
-    const complaintId = vote.complaint_id;
-    voteCounts[complaintId] = (voteCounts[complaintId] || 0) + 1;
+  (counts || []).forEach((row) => {
+    voteCounts[row.complaint_id] = Number(row.vote_count);
   });
 
   data = complaints.map((c) => ({

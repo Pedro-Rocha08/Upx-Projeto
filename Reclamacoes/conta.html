@@ -124,6 +124,20 @@
     <script src="supabase-client.js"></script>
 
     <script>
+      (async function () {
+        const supabase = window.supabaseClient;
+
+        if (!supabase) return;
+
+        const { data, error } = await supabase.auth.getSession();
+
+        if (!error && data.session) {
+          window.location.replace("reclamacoes.html");
+        }
+      })();
+    </script>
+
+    <script>
       const form = document.getElementById("accountForm");
       const emailInput = document.getElementById("email");
       const passwordInput = document.getElementById("password");
@@ -172,7 +186,12 @@
 
           if (action === "login" || result.data.session) {
             const user = result.data.user;
-            console.log("Usuário autenticado:", user?.id);
+            console.log("Usuário autenticado:", user.id);
+
+            if (action === "login") {
+              window.location.href = "reclamacoes.html";
+              return;
+            }
           }
         } catch (error) {
           message.textContent = "Não foi possível concluir: " + error.message;
