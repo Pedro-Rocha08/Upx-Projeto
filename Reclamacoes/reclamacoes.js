@@ -76,7 +76,8 @@ function save(d) {
 function calculatePriority(complaint) {
   const votes = Math.max(0, Number(complaint.votes) || 0);
 
-  const createdAt = Number(complaint.id);
+  const createdAt = new Date(complaint.created_at || Date.now()).getTime();
+
   const ageInDays = Number.isFinite(createdAt)
     ? Math.max(0, (Date.now() - createdAt) / 86400000)
     : 0;
@@ -96,6 +97,69 @@ let data = getData(),
 const list = document.getElementById("complaintList"),
   search = document.getElementById("search"),
   count = document.getElementById("countBadge");
+
+async function loadComplaintsFromSupabase() {
+  const supabase = window.supabaseClient;
+
+  const { data: complaints, error } = await supabase
+    .from("complaints")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao carregar reclamações:", error);
+    return;
+  }
+
+  const { data: votes, error: votesError } = await supabase
+    .from("complaint_votes")
+    .select("complaint_id, user_id");
+
+  if (votesError) {
+    console.error("Erro ao carregar apoios:", votesError);
+    return;
+  }
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError) {
+    console.error("Erro ao identificar usuário:", userError);
+  }
+
+  const myVotes = user
+    ? votes
+        .filter((vote) => vote.user_id === user.id)
+        .map((vote) => String(vote.complaint_id))
+    : [];
+
+  localStorage.setItem("fiscalizeVotedComplaints", JSON.stringify(myVotes));
+
+  const voteCounts = {};
+
+  votes.forEach((vote) => {
+    const complaintId = vote.complaint_id;
+    voteCounts[complaintId] = (voteCounts[complaintId] || 0) + 1;
+  });
+
+  data = complaints.map((c) => ({
+    id: c.id,
+    title: c.title,
+    description: c.description,
+    category: c.category,
+    location: c.location,
+    votes: voteCounts[c.id] || 0,
+    status: c.status,
+    answered: c.answered,
+    response: c.response || "",
+    created_at: c.created_at,
+  }));
+
+  render();
+}
+
 function statusClass(s) {
   return s === "Resolvido"
     ? "resolved"
@@ -139,7 +203,7 @@ function render() {
               <div class="vote-box">
                 <button
                   type="button"
-                  onclick="vote(${c.id})"
+                  onclick="vote('${c.id}')"
                   class="${getVotedComplaints().includes(String(c.id)) ? "voted" : ""}"
                   aria-label="${getVotedComplaints().includes(String(c.id)) ? "Retirar meu apoio" : "Apoiar esta reclamação"}"
                   aria-pressed="${getVotedComplaints().includes(String(c.id))}"
@@ -165,7 +229,6 @@ function getVotedComplaints() {
 }
 
 function showWithdrawSupportModal(id) {
-  // Evita criar duas janelas ao mesmo tempo.
   document.getElementById("support-modal")?.remove();
 
   const modal = document.createElement("div");
@@ -199,22 +262,48 @@ function showWithdrawSupportModal(id) {
 
   document.body.appendChild(modal);
 
-  // Fecha sem alterar a contagem.
   function closeModal() {
     modal.remove();
   }
 
   modal.querySelector(".support-cancel").addEventListener("click", closeModal);
 
-  // Também fecha se clicar fora da janela.
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
       closeModal();
     }
   });
 
-  // Retira o apoio e atualiza os dados.
-  modal.querySelector(".support-remove").addEventListener("click", () => {
+  modal.querySelector(".support-remove").addEventListener("click", async () => {
+    const supabase = window.supabaseClient;
+
+    if (!supabase) {
+      alert("Não foi possível conectar ao banco de dados.");
+      return;
+    }
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      alert("Entre na sua conta para retirar seu apoio.");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("complaint_votes")
+      .delete()
+      .eq("complaint_id", id)
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Erro ao retirar apoio:", error);
+      alert("Não foi possível retirar seu apoio. Tente novamente.");
+      return;
+    }
+
     const votedComplaints = getVotedComplaints().filter(
       (votedId) => votedId !== String(id),
     );
@@ -224,44 +313,70 @@ function showWithdrawSupportModal(id) {
       JSON.stringify(votedComplaints),
     );
 
-    data = data.map((c) =>
-      c.id === id
-        ? {
-            ...c,
-            votes: Math.max(0, (Number(c.votes) || 0) - 1),
-          }
-        : c,
-    );
-
-    save(data);
     closeModal();
-    render();
+    await loadComplaintsFromSupabase();
   });
 }
 
-function vote(id) {
-  const votedComplaints = getVotedComplaints();
+async function vote(id) {
+  const supabase = window.supabaseClient;
 
-  // Se já apoiou, pergunta se deseja retirar.
-  if (votedComplaints.includes(String(id))) {
+  if (!supabase) {
+    alert("Não foi possível conectar ao banco de dados.");
+    return;
+  }
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    alert("Entre na sua conta para apoiar uma reclamação.");
+    return;
+  }
+
+  const { data: existingVote, error: checkError } = await supabase
+    .from("complaint_votes")
+    .select("complaint_id")
+    .eq("complaint_id", id)
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (checkError) {
+    console.error("Erro ao verificar apoio:", checkError);
+    alert("Não foi possível verificar seu apoio. Tente novamente.");
+    return;
+  }
+
+  if (existingVote) {
     showWithdrawSupportModal(id);
     return;
   }
 
-  // Registra o novo apoio.
-  votedComplaints.push(String(id));
+  const { error: insertError } = await supabase.from("complaint_votes").insert({
+    complaint_id: id,
+    user_id: user.id,
+  });
 
-  localStorage.setItem(
-    "fiscalizeVotedComplaints",
-    JSON.stringify(votedComplaints),
-  );
+  if (insertError) {
+    console.error("Erro ao registrar apoio:", insertError);
+    alert("Não foi possível registrar seu apoio. Tente novamente.");
+    return;
+  }
 
-  data = data.map((c) =>
-    c.id === id ? { ...c, votes: (Number(c.votes) || 0) + 1 } : c,
-  );
+  const votedComplaints = getVotedComplaints();
 
-  save(data);
-  render();
+  if (!votedComplaints.includes(String(id))) {
+    votedComplaints.push(String(id));
+
+    localStorage.setItem(
+      "fiscalizeVotedComplaints",
+      JSON.stringify(votedComplaints),
+    );
+  }
+
+  await loadComplaintsFromSupabase();
 }
 
 window.vote = vote;
@@ -293,29 +408,71 @@ document
   .addEventListener("click", () => openTab("feed"));
 if (location.hash === "#registrar") openTab("registrar");
 const form = document.getElementById("complaintForm");
-form.addEventListener("submit", (e) => {
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const title = document.getElementById("titulo").value.trim(),
-    description = document.getElementById("descricao").value.trim(),
-    category = document.getElementById("categoria").value,
-    locationText = document.getElementById("local").value.trim();
+
+  const title = document.getElementById("titulo").value.trim();
+  const description = document.getElementById("descricao").value.trim();
+  const category = document.getElementById("categoria").value;
+  const locationText = document.getElementById("local").value.trim();
+
+  const supabase = window.supabaseClient;
+
+  if (!supabase) {
+    alert("Não foi possível conectar ao banco de dados.");
+    return;
+  }
+
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+
+  if (sessionError || !sessionData.session) {
+    alert("Entre na sua conta para publicar uma reclamação.");
+    return;
+  }
+
+  const { data: newComplaint, error } = await supabase
+    .from("complaints")
+    .insert({
+      user_id: sessionData.session.user.id,
+      title,
+      description,
+      category,
+      location: locationText,
+      status: "Pendente",
+      answered: false,
+      response: "",
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Erro ao publicar reclamação:", error);
+    alert("Não foi possível publicar. Confira o Console para ver o erro.");
+    return;
+  }
+
   data.unshift({
-    id: Date.now(),
-    title,
-    description,
-    category,
-    location: locationText,
-    votes: 1,
-    status: "Pendente",
-    answered: false,
-    response: "",
+    id: newComplaint.id,
+    title: newComplaint.title,
+    description: newComplaint.description,
+    category: newComplaint.category,
+    location: newComplaint.location,
+    votes: newComplaint.votes ?? 0,
+    status: newComplaint.status,
+    answered: newComplaint.answered,
+    response: newComplaint.response,
   });
+
   save(data);
   form.reset();
   openTab("feed");
   render();
+
   alert("Reclamação publicada com sucesso!");
 });
+
 const menuBtn = document.getElementById("menuBtn"),
   sidebar = document.getElementById("sidebar"),
   overlay = document.getElementById("overlay"),
@@ -355,3 +512,5 @@ themeBtn.addEventListener("click", () => {
   updateLogo();
 });
 render();
+
+loadComplaintsFromSupabase();
