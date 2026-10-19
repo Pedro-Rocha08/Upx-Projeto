@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entrar | Fiscalize Aqui</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Arial, sans-serif;
+        background: #f3f7fb;
+        color: #14283d;
+      }
+
+      main {
+        width: 100%;
+        max-width: 420px;
+        padding: 28px;
+        background: white;
+        border: 1px solid #d9e4ef;
+        border-radius: 16px;
+        box-shadow: 0 12px 35px #17365312;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+      p {
+        color: #53677c;
+        line-height: 1.5;
+      }
+
+      label {
+        display: block;
+        margin-top: 16px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        margin-top: 7px;
+        padding: 12px;
+        border: 1px solid #cbd8e5;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 14px;
+        padding: 12px;
+        border: 0;
+        border-radius: 8px;
+        background: #006db2;
+        color: white;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+      button.secondary {
+        background: #eaf2f9;
+        color: #16466d;
+      }
+
+      #message {
+        overflow-wrap: anywhere;
+        margin-top: 16px;
+      }
+
+      a {
+        color: #006db2;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Fiscalize Aqui</h1>
+      <p>Entre na sua conta ou cadastre-se para participar da comunidade.</p>
+
+      <form id="accountForm">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          required
+          maxlength="254"
+        />
+
+        <label for="password">Senha</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+          minlength="8"
+          maxlength="72"
+        />
+
+        <button type="submit" id="loginButton">Entrar</button>
+        <button type="button" class="secondary" id="signupButton">
+          Criar conta
+        </button>
+      </form>
+
+      <p id="message" role="status" aria-live="polite"></p>
+      <p><a href="reclamacoes.html">Voltar às reclamações</a></p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+
+    <script>
+      const form = document.getElementById("accountForm");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const loginButton = document.getElementById("loginButton");
+      const signupButton = document.getElementById("signupButton");
+      const message = document.getElementById("message");
+
+      async function submitAccount(action) {
+        message.textContent = "";
+
+        if (!form.reportValidity()) return;
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const button = action === "login" ? loginButton : signupButton;
+
+        loginButton.disabled = true;
+        signupButton.disabled = true;
+        button.textContent = "Aguarde...";
+
+        try {
+          let result;
+
+          if (action === "signup") {
+            result = await window.supabaseClient.auth.signUp({
+              email,
+              password,
+            });
+          } else {
+            result = await window.supabaseClient.auth.signInWithPassword({
+              email,
+              password,
+            });
+          }
+
+          if (result.error) throw result.error;
+
+          if (action === "signup" && !result.data.session) {
+            message.textContent =
+              "Cadastro iniciado! Confira seu e-mail para confirmar a conta.";
+          } else if (action === "signup") {
+            message.textContent = "Conta criada e sessão iniciada!";
+          } else {
+            message.textContent = "Login realizado com sucesso!";
+          }
+
+          if (action === "login" || result.data.session) {
+            const user = result.data.user;
+            console.log("Usuário autenticado:", user?.id);
+          }
+        } catch (error) {
+          message.textContent = "Não foi possível concluir: " + error.message;
+        } finally {
+          loginButton.disabled = false;
+          signupButton.disabled = false;
+          loginButton.textContent = "Entrar";
+          signupButton.textContent = "Criar conta";
+        }
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        submitAccount("login");
+      });
+
+      signupButton.addEventListener("click", () => {
+        submitAccount("signup");
+      });
+    </script>
+  </body>
+</html>
