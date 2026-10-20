@@ -124,8 +124,15 @@
               ></textarea></label
             ><label
               >Foto <span class="optional">(opcional)</span
-              ><input id="foto" type="file" accept="image/*"
-            /></label>
+              ><input
+                id="foto"
+                type="file"
+                accept="image/*,video/mp4,video/webm,video/quicktime"
+                multiple
+              />
+            </label>
+            <div id="mediaPreview" class="media-preview"></div>
+            <p id="mediaMessage" class="media-message" role="status"></p>
             <div class="form-actions">
               <button type="button" class="btn-secondary" id="cancelForm">
                 Cancelar</button

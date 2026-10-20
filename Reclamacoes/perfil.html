@@ -342,5 +342,36 @@
 
       loadProfile();
     </script>
+
+    <script>
+      const themeBtn = document.getElementById("themeBtn");
+      const logo = document.querySelector(".site-logo");
+
+      function applyProfileTheme(isDark) {
+        document.body.classList.toggle("dark-mode", isDark);
+
+        if (logo) {
+          logo.src = isDark ? logo.dataset.logoDark : logo.dataset.logoLight;
+        }
+
+        if (themeBtn) {
+          themeBtn.textContent = isDark ? "☀" : "☾";
+          themeBtn.setAttribute(
+            "aria-label",
+            isDark ? "Ativar modo claro" : "Ativar modo noturno",
+          );
+        }
+      }
+
+      const savedTheme = localStorage.getItem("fiscalizeTheme");
+      applyProfileTheme(savedTheme === "dark");
+
+      themeBtn?.addEventListener("click", () => {
+        const isDark = !document.body.classList.contains("dark-mode");
+
+        localStorage.setItem("fiscalizeTheme", isDark ? "dark" : "light");
+        applyProfileTheme(isDark);
+      });
+    </script>
   </body>
 </html>

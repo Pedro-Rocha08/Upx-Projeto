@@ -57,9 +57,9 @@ body {
   color: var(--text);
 }
 .brand-link img {
-    width: 220px;
-    height: auto;
-    display: block;
+  width: 220px;
+  height: auto;
+  display: block;
 }
 .brand-link strong {
   display: block;
@@ -457,7 +457,6 @@ footer {
   font-size: 0.7rem;
 }
 
-
 /* Cartões de reclamação — computador */
 .complaint {
   display: grid;
@@ -575,7 +574,6 @@ footer {
   }
 }
 
-
 @media (max-width: 700px) {
   .header {
     padding: 0 14px;
@@ -614,7 +612,6 @@ footer {
     margin: 4px;
   }
 }
-
 
 /* Janela de confirmação de retirada de apoio */
 .support-modal-overlay {
@@ -686,7 +683,9 @@ footer {
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .support-modal-actions button:hover {
@@ -709,8 +708,12 @@ footer {
 }
 
 @keyframes supportFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes supportSlideIn {
@@ -758,7 +761,6 @@ footer {
   outline: 3px solid rgba(0, 110, 175, 0.4);
   outline-offset: 3px;
 }
-
 
 /* Mantém o botão de apoio no formato original */
 .vote-box button {
@@ -829,4 +831,427 @@ footer {
   background: #006eaf;
   color: #ffffff;
   border-color: #006eaf;
+}
+
+.media-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.media-preview img,
+.media-preview video {
+  display: block;
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border-color, #d7e2ed);
+}
+
+.media-message {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.media-message:empty {
+  display: none;
+}
+
+.complaint-media-image {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  max-height: 220px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+.complaint-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.complaint-actions button {
+  padding: 9px 14px;
+  border: 1px solid var(--border-color, #d7e2ed);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  color: var(--text-color, #102a43);
+  font: inherit;
+  cursor: pointer;
+}
+
+.complaint-actions .delete-complaint-btn {
+  color: #b42318;
+  border-color: #b42318;
+}
+
+.complaint-actions button:hover {
+  filter: brightness(0.95);
+}
+
+/* Limita as mídias ao espaço disponível no cartão */
+.complaint-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 100%;
+  min-width: 0;
+  margin-top: 12px;
+}
+
+.complaint-media img,
+.complaint-media video {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  max-height: 220px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.complaint {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.complaint {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.complaint-content {
+  min-width: 0;
+}
+
+.complaint-content h3 {
+  margin: 12px 0 6px;
+  overflow-wrap: anywhere;
+}
+
+.complaint-content .complaint-desc {
+  overflow-wrap: anywhere;
+}
+
+.complaint-content .complaint-score {
+  margin-bottom: 12px;
+}
+
+.complaint-content .complaint-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.complaint-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 100%;
+  min-width: 0;
+  margin-top: 12px;
+}
+
+.complaint-media img,
+.complaint-media video {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  max-height: 220px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+@media (max-width: 640px) {
+  .complaint {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .complaint > .status {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+.complaint-content {
+  display: block;
+  min-width: 0;
+  width: 100%;
+}
+
+.complaint-content .complaint-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.complaint-content .complaint-score {
+  margin-bottom: 12px;
+}
+
+.complaint-content .complaint-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.complaint-media img,
+.complaint-media video {
+  width: 100%;
+  max-width: 320px;
+  max-height: 220px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Alinha apoios, prioridade e conteúdo da reclamação */
+.complaint {
+  display: grid;
+  grid-template-columns: 64px 80px minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 16px;
+}
+
+.complaint > .vote-box {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.complaint > .complaint-content {
+  grid-column: 2 / 4;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: start;
+}
+
+.complaint-content > .complaint-score {
+  grid-column: 1;
+  grid-row: 1 / span 4;
+  margin: 0;
+  text-align: center;
+}
+
+.complaint-content > .complaint-meta,
+.complaint-content > h3,
+.complaint-content > .complaint-desc,
+.complaint-content > .location,
+.complaint-content > .complaint-media,
+.complaint-content > .response,
+.complaint-content > .complaint-actions {
+  grid-column: 2;
+}
+
+.complaint-content > .complaint-meta {
+  grid-row: 1;
+}
+
+.complaint-content > h3 {
+  grid-row: 2;
+  margin-top: 10px;
+}
+
+.complaint-content > .complaint-desc {
+  grid-row: 3;
+}
+
+.complaint-content > .location {
+  grid-row: 4;
+}
+
+.complaint-content > .complaint-media {
+  grid-row: 5;
+}
+
+.complaint-content > .response {
+  grid-row: 6;
+}
+
+.complaint-content > .complaint-actions {
+  grid-row: 7;
+}
+
+.complaint > .status {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+@media (max-width: 640px) {
+  .complaint {
+    grid-template-columns: 48px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+
+  .complaint > .complaint-content {
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .complaint-content > .complaint-score,
+  .complaint-content > .complaint-meta,
+  .complaint-content > h3,
+  .complaint-content > .complaint-desc,
+  .complaint-content > .location,
+  .complaint-content > .complaint-media,
+  .complaint-content > .response,
+  .complaint-content > .complaint-actions {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .complaint > .status {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+}
+
+/* Posicionamento dos votos, prioridade e conteúdo */
+.complaint {
+  grid-template-columns: 64px 64px minmax(0, 1fr) auto;
+  column-gap: 8px;
+}
+
+.complaint > .complaint-content {
+  grid-template-columns: 64px minmax(0, 1fr);
+  column-gap: 24px;
+}
+
+.complaint-content > .complaint-score {
+  width: 64px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Ajuste fino da posição dos pontos de prioridade */
+.complaint-content {
+  position: relative;
+}
+
+.complaint-content > .complaint-score {
+  position: absolute;
+  left: -72px;
+  top: 0;
+  width: 56px;
+  margin: 0;
+  text-align: center;
+}
+
+
+/* Responsividade dos cartões de reclamação */
+@media (max-width: 640px) {
+  .complaint {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
+    overflow: hidden;
+  }
+
+  .complaint > .vote-box {
+    grid-column: 1;
+    grid-row: 1;
+    width: 48px;
+  }
+
+  .complaint > .complaint-content {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* No celular, a prioridade volta ao fluxo normal */
+  .complaint-content > .complaint-score {
+    position: static;
+    width: auto;
+    margin: 0;
+    text-align: left;
+  }
+
+  .complaint-content > .complaint-score strong,
+  .complaint-content > .complaint-score small {
+    display: inline;
+  }
+
+  .complaint-content > .complaint-score small {
+    margin-left: 4px;
+  }
+
+  .complaint-content > .complaint-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .complaint-content h3,
+  .complaint-content .complaint-desc,
+  .complaint-content .location {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .complaint-content h3 {
+    margin: 4px 0;
+  }
+
+  .complaint-content .complaint-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .complaint-content .complaint-actions button {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  .complaint-content .complaint-media {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .complaint-content .complaint-media a,
+  .complaint-content .complaint-media img,
+  .complaint-content .complaint-media video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 260px;
+    object-fit: contain;
+  }
+
+  .complaint > .status {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+    align-self: start;
+  }
 }

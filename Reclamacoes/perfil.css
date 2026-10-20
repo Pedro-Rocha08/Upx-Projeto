@@ -240,3 +240,66 @@
     justify-self: stretch;
   }
 }
+
+/* Modo noturno da página de perfil */
+body.dark-mode {
+  background-color: #121820;
+  color: #e6edf5;
+}
+
+body.dark-mode .header {
+  background-color: #161f2b;
+  border-bottom-color: #2c3949;
+}
+
+body.dark-mode .profile-container,
+body.dark-mode main,
+body.dark-mode .profile-card {
+  background-color: #121820;
+  color: #e6edf5;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode label,
+body.dark-mode strong {
+  color: #e6edf5;
+}
+
+body.dark-mode p,
+body.dark-mode .subtitle {
+  color: #aabbd0;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #1c2735;
+  color: #e6edf5;
+  border-color: #394b60;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #9aabc0;
+}
+
+body.dark-mode .info-box,
+body.dark-mode .account-info,
+body.dark-mode .complaint-item,
+body.dark-mode .supported-complaint {
+  background-color: #1a2532;
+  color: #e6edf5;
+  border-color: #344458;
+}
+
+body.dark-mode a {
+  color: #65baff;
+}
+
+body.dark-mode .theme-btn {
+  background-color: #1c2735;
+  color: #e6edf5;
+  border-color: #394b60;
+}
