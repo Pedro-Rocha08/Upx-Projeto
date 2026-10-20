@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="notificacoes.css" />
     <title>Entrar | Fiscalize Aqui</title>
     <style>
       * {
@@ -120,6 +121,7 @@
       <p><a href="reclamacoes.html">Voltar às reclamações</a></p>
     </main>
 
+    <script src="notificacoes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
 
@@ -176,12 +178,22 @@
           if (result.error) throw result.error;
 
           if (action === "signup" && !result.data.session) {
-            message.textContent =
-              "Cadastro iniciado! Confira seu e-mail para confirmar a conta.";
+            window.showToast(
+              "Cadastro iniciado! Confirme seu e-mail para ativar a conta.",
+              "success",
+            );
           } else if (action === "signup") {
-            message.textContent = "Conta criada e sessão iniciada!";
+            window.showToast("Conta criada e sessão iniciada!", "success");
           } else {
-            message.textContent = "Login realizado com sucesso!";
+            sessionStorage.setItem(
+              "fiscalizeToast",
+              JSON.stringify({
+                message: "Login realizado com sucesso!",
+                type: "success",
+                duration: 4500,
+              }),
+            );
+            window.location.href = "reclamacoes.html";
           }
 
           if (action === "login" || result.data.session) {
@@ -194,7 +206,14 @@
             }
           }
         } catch (error) {
-          message.textContent = "Não foi possível concluir: " + error.message;
+          const errorMessage = error.message?.includes(
+            "Invalid login credentials",
+          )
+            ? "E-mail ou senha incorretos."
+            : "Não foi possível concluir: " + error.message;
+
+          window.showToast(errorMessage, "error", 5000);
+          message.textContent = "";
         } finally {
           loginButton.disabled = false;
           signupButton.disabled = false;

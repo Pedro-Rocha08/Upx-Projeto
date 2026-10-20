@@ -6,6 +6,7 @@
     <title>Meu perfil | Fiscalize Aqui</title>
     <link rel="stylesheet" href="reclamacoes.css" />
     <link rel="stylesheet" href="perfil.css" />
+    <link rel="stylesheet" href="notificacoes.css" />
   </head>
   <body>
     <header class="header">
@@ -47,20 +48,20 @@
           Carregando seu perfil...
         </div>
 
-        <div class="profile-name-form">
-          <label for="displayName">Nome de exibição</label>
-
-          <input
-            type="text"
-            id="displayName"
-            placeholder="Como você quer aparecer no sistema"
-            maxlength="50"
-          />
-
-          <button type="button" id="saveProfileBtn">Salvar nome</button>
-        </div>
-
         <div id="profileInfo" hidden>
+          <div class="profile-name-editor">
+            <label for="displayName">Nome de exibição</label>
+            <input
+              type="text"
+              id="displayName"
+              placeholder="Como você quer aparecer no site"
+              maxlength="60"
+              autocomplete="nickname"
+            />
+            <button type="button" id="saveNameBtn">Salvar nome</button>
+            <p id="nameMessage" role="status" aria-live="polite"></p>
+          </div>
+
           <div class="profile-details">
             <p class="profile-detail">
               <strong>E-mail:</strong>
@@ -104,7 +105,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    
+    <script src="notificacoes.js"></script>
     <script>
       (async function () {
         const supabase = window.supabaseClient;
@@ -132,7 +133,8 @@
       const idElement = document.getElementById("profileId");
       const logoutBtn = document.getElementById("logoutBtn");
       const displayNameInput = document.getElementById("displayName");
-      const saveProfileBtn = document.getElementById("saveProfileBtn");
+      const saveNameBtn = document.getElementById("saveNameBtn");
+      const nameMessage = document.getElementById("nameMessage");
       const myComplaintsList = document.getElementById("myComplaintsList");
 
       async function loadProfile() {
@@ -151,6 +153,7 @@
           return;
         }
 
+        displayNameInput.value = data.user.user_metadata?.display_name || "";
         emailElement.textContent = data.user.email || "Não informado";
         idElement.textContent = data.user.id;
         displayNameInput.value = data.user.user_metadata?.display_name || "";
@@ -283,34 +286,46 @@
         }
       }
 
-      saveProfileBtn.addEventListener("click", async () => {
+      saveNameBtn.addEventListener("click", async () => {
         const displayName = displayNameInput.value.trim();
 
         if (!displayName) {
-          message.textContent = "Digite um nome antes de salvar.";
-          displayNameInput.focus();
+          nameMessage.textContent = "Digite um nome antes de salvar.";
           return;
         }
 
-        saveProfileBtn.disabled = true;
-        message.textContent = "Salvando nome...";
+        if (displayName.length > 60) {
+          nameMessage.textContent = "O nome deve ter no máximo 60 caracteres.";
+          return;
+        }
 
-        const { error } = await window.supabaseClient.auth.updateUser({
-          data: {
-            display_name: displayName,
-          },
-        });
+        saveNameBtn.disabled = true;
+        nameMessage.textContent = "Salvando nome...";
 
-        saveProfileBtn.disabled = false;
+        try {
+          const { data, error } = await window.supabaseClient.auth.updateUser({
+            data: { display_name: displayName },
+          });
 
-        if (error) {
-          message.textContent =
-            "Não foi possível salvar o nome. Tente novamente.";
+          if (error) {
+            window.showToast("Não foi possível salvar o nome.", "error");
+            nameMessage.textContent = "";
+            console.error("Erro ao salvar nome:", error);
+            return;
+          }
+
+          displayNameInput.value =
+            data.user.user_metadata?.display_name || displayName;
+
+          window.showToast("Nome salvo com sucesso!", "success");
+          nameMessage.textContent = "";
+        } catch (error) {
           console.error("Erro ao salvar nome:", error);
-          return;
+          window.showToast("Ocorreu um erro ao salvar o nome.", "error");
+          nameMessage.textContent = "";
+        } finally {
+          saveNameBtn.disabled = false;
         }
-
-        message.textContent = "Nome salvo com sucesso!";
       });
 
       logoutBtn.addEventListener("click", async () => {

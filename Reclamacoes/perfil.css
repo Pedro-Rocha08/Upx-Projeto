@@ -161,3 +161,82 @@
   margin: 0 0 8px;
   font-size: 1.4rem;
 }
+
+/* Editor do nome de exibição */
+.profile-name-editor {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.profile-name-editor label {
+  font-weight: 600;
+  color: var(--text-color, #102a43);
+}
+
+.profile-name-editor input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid var(--border-color, #d7e2ed);
+  border-radius: 10px;
+  background: var(--card-bg, #fff);
+  color: var(--text-color, #102a43);
+  font: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.profile-name-editor input:focus {
+  outline: none;
+  border-color: #0875bd;
+  box-shadow: 0 0 0 3px rgba(8, 117, 189, 0.15);
+}
+
+.profile-name-editor button {
+  justify-self: start;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #0875bd;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.profile-name-editor button:hover {
+  background: #055d98;
+}
+
+.profile-name-editor button:active {
+  transform: translateY(1px);
+}
+
+.profile-name-editor button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.profile-name-editor button:focus-visible {
+  outline: 3px solid rgba(8, 117, 189, 0.3);
+  outline-offset: 3px;
+}
+
+.profile-name-editor [role="status"] {
+  margin: 0;
+  color: var(--text-muted, #64748b);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .profile-name-editor button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
